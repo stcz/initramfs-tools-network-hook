@@ -1,0 +1,29 @@
+#!/bin/sh
+
+PREREQ=""
+
+prereqs() {
+    echo "$PREREQ"
+}
+
+case "$1" in
+    prereqs)
+        prereqs
+        exit 0
+    ;;
+esac
+
+if grep -q ^VLAN= /conf/initramfs.conf; then
+    . /conf/initramfs.conf
+    modprobe 8021q
+fi
+
+for VLAN_IFACE in ${VLAN:-*}; do
+    SOURCE_IFACE=$(echo $VLAN_IFACE | cut -d":" -f1)
+    VLAN_ID=$(echo $VLAN_IFACE | cut -d":" -f2)
+    ip link add link $SOURCE_IFACE name $SOURCE_IFACE.$VLAN_ID type vlan id $VLAN_ID
+    ip link set $SOURCE_IFACE up
+    ip link set $SOURCE_IFACE.$VLAN_ID up
+done
+
+exit 0

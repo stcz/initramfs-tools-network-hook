@@ -1,0 +1,30 @@
+#!/bin/sh
+
+PREREQ="ifdown"
+
+prereqs() {
+    echo "$PREREQ"
+}
+
+case "$1" in
+    prereqs)
+        prereqs
+        exit 0
+    ;;
+esac
+
+if grep -q ^DROPBEAR_IFDOWN= /conf/initramfs.conf; then
+    # XXX backward compatibility; remove once Stretch is the current stable
+    . /conf/initramfs.conf
+    IFDOWN="$DROPBEAR_IFDOWN"
+fi
+if [ -e /etc/dropbear/config ]; then
+    . /etc/dropbear/config
+fi
+
+[ "$IFDOWN" != none ] || exit 0
+for IFACE in ${IFDOWN:-*}; do
+    if ip link | grep -q "$IFACE@"; then
+        ip link delete "$IFACE"
+    fi
+done

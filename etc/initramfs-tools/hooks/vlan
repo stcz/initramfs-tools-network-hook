@@ -1,0 +1,20 @@
+#!/bin/sh
+PREREQ=""
+prereqs()
+{
+     echo "$PREREQ"
+}
+
+case $1 in
+prereqs)
+     prereqs
+     exit 0
+     ;;
+esac
+
+. /usr/share/initramfs-tools/hook-functions
+# Begin real processing below this line
+
+if grep -q ^VLAN= /conf/initramfs.conf; then
+    manual_add_modules 8021q
+fi
