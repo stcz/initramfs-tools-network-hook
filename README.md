@@ -3,6 +3,10 @@ You can add this hooks to your initramfs-tools to get support for bond interface
 
 # Requiments
 The package `ifenslave` for bonding support.
+The package `vlan` for vlan support.
+
+# Installation
+Copy the files to the corresponding folder on your system. Make the hooks and scripts are executable.
 
 # Add VLAN Interface
 Add the following Line to your `/etc/initramfs-tools/initramfs.conf` to enable the VLAN IDs 221 and 222 on eth0:

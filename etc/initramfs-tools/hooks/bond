@@ -15,7 +15,7 @@ esac
 . /usr/share/initramfs-tools/hook-functions
 # Begin real processing below this line
 
-if grep -q ^BOND= /conf/initramfs.conf; then
+if grep -q ^BOND= /etc/initramfs-tools/initramfs.conf; then
     manual_add_modules bonding
     copy_exec /sbin/ifenslave /sbin
 fi
