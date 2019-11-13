@@ -1,12 +1,16 @@
 # initramfs-tools-network-hook
-You can add this hooks to your initramfs-tools to get support for bond interfaces or vlan interfaces during boot. You can configure the hooks in your /etc/initramfs-tools/initramfs.conf. Tested successfully under debian 9. It should also work on other debian based Distros like ubuntu.
+With this initramfs scripts it is possible to add a bond or vlan device to your initramfs, for example to unlock your encrypted disks via SSH (Dropbear) over a vlan or bond interface.
+
+You can add this hooks to your initramfs-tools to get support for bond interfaces or vlan interfaces during boot. You can configure the hooks in your /etc/initramfs-tools/initramfs.conf. Tested successful under debian 10. It should also work on other debian based Distros like ubuntu.
+
+The scripts should leave a empty networkconfiguration for the operating system.
 
 # Requiments
 The package `ifenslave` for bonding support.
 The package `vlan` for vlan support.
 
 # Installation
-Copy the files to the corresponding folder on your system. Make the hooks and scripts are executable.
+Copy the files to the corresponding folder on your system. Make sure the hooks and scripts are executable.
 
 # Add VLAN Interface
 Add the following Line to your `/etc/initramfs-tools/initramfs.conf` to enable the VLAN IDs 221 and 222 on eth0:

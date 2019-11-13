@@ -1,0 +1,27 @@
+#!/bin/sh
+
+PREREQ=""
+
+prereqs() {
+    echo "$PREREQ"
+}
+
+case "$1" in
+    prereqs)
+        prereqs
+        exit 0
+    ;;
+esac
+
+if grep -q ^BOND= /conf/initramfs.conf; then
+    . /conf/initramfs.conf
+fi
+
+for BOND_IFACE in ${BOND:-*}; do
+    BOND_DEVICE=$(echo $BOND_IFACE | cut -d":" -f1)
+    BOND_SLAVES=$(echo $BOND_IFACE | cut -d":" -f2 | sed "s/,/ /g" )
+    ifenslave -d $BOND_DEVICE $BOND_SLAVES
+    ip link delete $BOND_DEVICE
+done
+
+exit 0

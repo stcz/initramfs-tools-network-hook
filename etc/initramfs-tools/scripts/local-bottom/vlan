@@ -13,18 +13,12 @@ case "$1" in
     ;;
 esac
 
-if grep -q ^DROPBEAR_IFDOWN= /conf/initramfs.conf; then
-    # XXX backward compatibility; remove once Stretch is the current stable
+if grep -q ^VLAN= /conf/initramfs.conf; then
     . /conf/initramfs.conf
-    IFDOWN="$DROPBEAR_IFDOWN"
-fi
-if [ -e /etc/dropbear/config ]; then
-    . /etc/dropbear/config
 fi
 
-[ "$IFDOWN" != none ] || exit 0
-for IFACE in ${IFDOWN:-*}; do
-    if ip link | grep -q "$IFACE@"; then
-        ip link delete "$IFACE"
-    fi
+for VLAN_IFACE in ${VLAN:-*}; do
+    SOURCE_IFACE=$(echo $VLAN_IFACE | cut -d":" -f1)
+    VLAN_ID=$(echo $VLAN_IFACE | cut -d":" -f2)
+    ip link delete $SOURCE_IFACE.$VLAN_ID
 done
