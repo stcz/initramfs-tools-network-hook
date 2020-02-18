@@ -10,7 +10,7 @@ jobs:
     docker:
       - image: circleci/python:buster
     steps:
-      - say-hello:
+      - run:
           name: say hello
           command: |
             echo "hello."
