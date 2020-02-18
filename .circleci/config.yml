@@ -10,10 +10,7 @@ jobs:
     docker:
       - image: circleci/python:buster
     steps:
-      - say-hello
-      filters:
-            branches:
-              only: master: 
+      - say-hello:
           name: say hello
           command: |
             echo "hello."
