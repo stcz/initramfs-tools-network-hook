@@ -5,9 +5,24 @@ orbs:
   # Declare a dependency on the welcome-orb
   welcome: circleci/welcome-orb@0.4.1
 # Orchestrate or schedule a set of jobs
+jobs:
+  show-test:
+    docker:
+      - image: circleci/python:buster
+    steps:
+      - say-hello
+      filters:
+            branches:
+              only: master: 
+          name: say hello
+          command: |
+            echo "hello."
 workflows:
   # Name the workflow "welcome"
   welcome:
     # Run the welcome/run job in its own container
     jobs:
-      - welcome/run
+      - say-hello:
+          filters:
+            branches:
+              only: master
