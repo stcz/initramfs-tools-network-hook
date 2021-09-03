@@ -20,7 +20,10 @@ fi
 for BOND_IFACE in ${BOND:-*}; do
     BOND_DEVICE=$(echo $BOND_IFACE | cut -d":" -f1)
     BOND_SLAVES=$(echo $BOND_IFACE | cut -d":" -f2 | sed "s/,/ /g" )
-    ifenslave -d $BOND_DEVICE $BOND_SLAVES
+    ip link add $BOND_DEVICE type bond
+    for BOND_SLAVE in $BOND_SLAVES; do
+        ip link set $BOND_SLAVE master bond0
+    done
     ip link delete $BOND_DEVICE
 done
 
