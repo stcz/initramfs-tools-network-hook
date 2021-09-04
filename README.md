@@ -6,7 +6,7 @@ You can add this hooks to your initramfs-tools to get support for bond interface
 The scripts should leave a empty networkconfiguration for the operating system.
 
 # Requiments
-The package `ifenslave` for bonding support.
+The package `iproute2` for bonding support.
 The package `vlan` for vlan support.
 
 # Installation
