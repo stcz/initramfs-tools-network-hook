@@ -13,18 +13,24 @@ case "$1" in
     ;;
 esac
 
-if grep -q ^BOND= /conf/initramfs.conf; then
-    . /conf/initramfs.conf
-    modprobe bonding $BOND_MODE
+. /scripts/functions
+. /conf/initramfs.conf
+
+if [ -z "$BOND" ]; then
+    exit 0
 fi
+
+modprobe bonding $BOND_MODE
 
 for BOND_IFACE in ${BOND:-*}; do
     BOND_DEVICE=$(echo $BOND_IFACE | cut -d":" -f1)
-    BOND_SLAVES=$(echo $BOND_IFACE | cut -d":" -f2 | sed "s/,/ /g" )
+    BOND_SLAVES=$(echo $BOND_IFACE | cut -d":" -f2 | sed "s/,/ /g")
+    log_begin_msg "Bringing up $BOND_DEVICE"
     ip link add $BOND_DEVICE type bond
     for BOND_SLAVE in $BOND_SLAVES; do
         ip link set $BOND_SLAVE master bond0
     done
+    log_end_msg
 done
 
 exit 0

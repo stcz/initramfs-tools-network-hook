@@ -13,12 +13,17 @@ case "$1" in
     ;;
 esac
 
-if grep -q ^VLAN= /conf/initramfs.conf; then
-    . /conf/initramfs.conf
+. /scripts/functions
+. /conf/initramfs.conf
+
+if [ -z "$VLAN" ]; then
+    exit 0
 fi
 
 for VLAN_IFACE in ${VLAN:-*}; do
     SOURCE_IFACE=$(echo $VLAN_IFACE | cut -d":" -f1)
     VLAN_ID=$(echo $VLAN_IFACE | cut -d":" -f2)
+    log_begin_msg "Bringing down $SOURCE_IFACE.$VLAN_ID"
     ip link delete $SOURCE_IFACE.$VLAN_ID
+    log_end_msg
 done
