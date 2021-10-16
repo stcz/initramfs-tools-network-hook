@@ -22,11 +22,6 @@ fi
 
 for BOND_IFACE in ${BOND:-*}; do
     BOND_DEVICE=$(echo $BOND_IFACE | cut -d":" -f1)
-    BOND_SLAVES=$(echo $BOND_IFACE | cut -d":" -f2 | sed "s/,/ /g" )
-    ip link add $BOND_DEVICE type bond
-    for BOND_SLAVE in $BOND_SLAVES; do
-        ip link set $BOND_SLAVE master bond0
-    done
     log_begin_msg "Bringing down $BOND_DEVICE"
     ip link delete $BOND_DEVICE
     log_end_msg

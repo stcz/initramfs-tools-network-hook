@@ -29,3 +29,5 @@ BOND_MODE="mode=802.3ad miimon=100"
 ```
 # Other Things you should know
 Maybe you have to add the driver for your NIC to your initramfs via modprobe
+
+You can set `DEVICE=bond0` in `/etc/initramfs-tools/initramfs.conf` to ensure the correct interface is used for DHCP.

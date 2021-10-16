@@ -28,7 +28,7 @@ for BOND_IFACE in ${BOND:-*}; do
     log_begin_msg "Bringing up $BOND_DEVICE"
     ip link add $BOND_DEVICE type bond
     for BOND_SLAVE in $BOND_SLAVES; do
-        ip link set $BOND_SLAVE master bond0
+        ip link set $BOND_SLAVE master $BOND_DEVICE
     done
     log_end_msg
 done
