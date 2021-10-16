@@ -13,13 +13,18 @@ case "$1" in
     ;;
 esac
 
-if grep -q ^BOND= /conf/initramfs.conf; then
-    . /conf/initramfs.conf
+. /scripts/functions
+. /conf/initramfs.conf
+
+if [ -z "$BOND" ]; then
+    exit 0
 fi
 
 for BOND_IFACE in ${BOND:-*}; do
     BOND_DEVICE=$(echo $BOND_IFACE | cut -d":" -f1)
+    log_begin_msg "Bringing down $BOND_DEVICE"
     ip link delete $BOND_DEVICE
+    log_end_msg
 done
 
 exit 0
