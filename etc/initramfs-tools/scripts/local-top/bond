@@ -25,11 +25,15 @@ modprobe bonding $BOND_MODE
 for BOND_IFACE in ${BOND:-*}; do
     BOND_DEVICE=$(echo $BOND_IFACE | cut -d":" -f1)
     BOND_SLAVES=$(echo $BOND_IFACE | cut -d":" -f2 | sed "s/,/ /g")
+    BOND_ADDR=$(echo $BOND_IFACE | cut -d":" -f3 | tr - :)
     log_begin_msg "Bringing up $BOND_DEVICE"
     ip link add $BOND_DEVICE type bond
     for BOND_SLAVE in $BOND_SLAVES; do
         ip link set $BOND_SLAVE master $BOND_DEVICE
     done
+    if [ -n "$BOND_ADDR" ]; then
+        ip link set $BOND_DEVICE address $BOND_ADDR
+    fi
     log_end_msg
 done
 

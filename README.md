@@ -22,6 +22,10 @@ Add the following Line to your `/etc/initramfs-tools/initramfs.conf` to enslave 
 ```
 BOND="bond0:eth0,eth1 bond1:eth2,eth3"
 ```
+Optionally, the hardware address for the interface can be specified (this can be useful for DHCP, note the format):
+```
+BOND="bond0:eth0,eth1:aa-bb-cc-dd-ee-ff"
+```
 With the following Line you can define the [Bonding Driver Options](https://wiki.linuxfoundation.org/networking/bonding#bonding_driver_options)
 For example use:
 ```
