@@ -15,6 +15,6 @@ esac
 . /usr/share/initramfs-tools/hook-functions
 # Begin real processing below this line
 
-if grep -q ^BOND= /etc/initramfs-tools/initramfs.conf; then
+if grep -rq ^BOND= /etc/initramfs-tools/initramfs.conf /etc/initramfs-tools/conf.d; then
     manual_add_modules bonding
 fi

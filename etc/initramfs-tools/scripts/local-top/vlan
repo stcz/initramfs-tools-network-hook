@@ -15,6 +15,7 @@ esac
 
 . /scripts/functions
 . /conf/initramfs.conf
+. /conf/conf.d/*.conf
 
 if [ -z "$VLAN" ]; then
     exit 0
