@@ -25,6 +25,8 @@ for BOND_IFACE in ${BOND:-*}; do
     BOND_DEVICE=$(echo $BOND_IFACE | cut -d":" -f1)
     log_begin_msg "Bringing down $BOND_DEVICE"
     ip link delete $BOND_DEVICE
+    rm /run/net-$BOND_DEVICE.conf \
+       /run/netplan/$BOND_DEVICE.yaml
     log_end_msg
 done
 
