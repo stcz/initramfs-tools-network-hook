@@ -13,12 +13,12 @@ The package `vlan` for vlan support.
 Copy the files to the corresponding folder on your system. Make sure the hooks and scripts are executable.
 
 # Add VLAN Interface
-Add the following Line to your `/etc/initramfs-tools/initramfs.conf` to enable the VLAN IDs 221 and 222 on eth0:
+Add the following Line to your `/etc/initramfs-tools/initramfs.conf` or in a file in `/etc/initramfs-tools/conf.d/*.conf` to enable the VLAN IDs 221 and 222 on eth0:
 ```
 VLAN="eth0:221 eth0:222"
 ```
 # Add Bond Interface
-Add the following Line to your `/etc/initramfs-tools/initramfs.conf` to enslave eth0 and eth1 to bond0 and eth2 and eth3 to bond1.
+Add the following Line to your `/etc/initramfs-tools/initramfs.conf` or in a file in `/etc/initramfs-tools/conf.d/*.conf` to enslave eth0 and eth1 to bond0 and eth2 and eth3 to bond1.
 ```
 BOND="bond0:eth0,eth1 bond1:eth2,eth3"
 ```
