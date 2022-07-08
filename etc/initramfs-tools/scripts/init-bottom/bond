@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PREREQ=""
+PREREQ="cloud-initramfs-dyn-netconf"
 
 prereqs() {
     echo "$PREREQ"
