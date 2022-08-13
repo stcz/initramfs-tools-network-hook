@@ -3,7 +3,7 @@ With this initramfs scripts it is possible to add a bond or vlan device to your 
 
 You can add this hooks to your initramfs-tools to get support for bond interfaces or vlan interfaces during boot. You can configure the hooks in your /etc/initramfs-tools/initramfs.conf. Tested successful under debian 10. It should also work on other debian based Distros like ubuntu.
 
-The scripts should leave a empty networkconfiguration for the operating system.
+The scripts should leave an empty network configuration for the operating system.
 
 # Requiments
 The package `iproute2` for bonding support.

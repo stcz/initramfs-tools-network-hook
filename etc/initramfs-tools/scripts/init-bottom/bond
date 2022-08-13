@@ -23,11 +23,18 @@ fi
 
 for BOND_IFACE in ${BOND:-*}; do
     BOND_DEVICE=$(echo $BOND_IFACE | cut -d":" -f1)
+    BOND_SLAVES=$(echo $BOND_IFACE | cut -d":" -f2 | sed "s/,/ /g")
     log_begin_msg "Bringing down $BOND_DEVICE"
     ip link delete $BOND_DEVICE
     rm /run/net-$BOND_DEVICE.conf \
        /run/netplan/$BOND_DEVICE.yaml
     log_end_msg
+
+    for BOND_SLAVE in $BOND_SLAVES; do
+        log_begin_msg "Bringing down $BOND_SLAVE"
+            ip link    set   dev "${BOND_SLAVE}" down
+        log_end_msg
+    done
 done
 
 exit 0
